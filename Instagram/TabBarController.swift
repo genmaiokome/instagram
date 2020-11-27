@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
@@ -24,6 +25,18 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         //UITabBarControllerDelegateプロトコルのメソッドをこのクラスで処理する
         self.delegate = self
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //currentUserがnilならログインしていない
+        if Auth.auth().currentUser == nil {
+            //ログインしていないときの処理
+            let loginViewController = self.storyboard?.instantiateViewController(withIdentifier: "Login")
+            self.present(loginViewController!, animated: true, completion: nil)
+            
+        }
     }
     
     //タブアイコンがタップされた時に呼ばれるdelegateメソッドを処理する
